@@ -48,12 +48,21 @@ namespace TechMoveApp.Tests.Workflow
         {
             var contract = new Contract
             {
-                Status = ContractStatus.Active
+                Status = ContractStatus.Active,
+                EndDate = DateTime.Now.AddDays(10) 
             };
 
             var result = _service.CanCreateServiceRequest(contract);
 
             Assert.True(result);
+        }
+
+        [Fact]
+        public void Cannot_Create_Request_When_Contract_Is_Null()
+        {
+            var result = _service.CanCreateServiceRequest(null);
+
+            Assert.False(result);
         }
     }
 }

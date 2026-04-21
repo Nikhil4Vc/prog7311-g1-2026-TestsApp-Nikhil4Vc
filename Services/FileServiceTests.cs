@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,19 @@ namespace TechMoveApp.Tests.Services
             var result = await service.SavePdfAsync(fileMock.Object);
 
             Assert.True(result.Success);
+        }
+
+        [Fact]
+        public async Task Upload_NullFile_Should_Fail()
+        {
+            var envMock = new Mock<IWebHostEnvironment>();
+            envMock.Setup(e => e.WebRootPath).Returns("wwwroot");
+
+            var service = new FileService(envMock.Object);
+
+            var result = await service.SavePdfAsync(null);
+
+            Assert.False(result.Success);
         }
     }
 }

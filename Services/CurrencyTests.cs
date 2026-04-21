@@ -21,6 +21,17 @@ namespace TechMoveApp.Tests.Services
 
             Assert.Equal(180, result);
         }
+
+        [Fact]
+        public void Convert_ZeroUsd_ReturnsZero()
+        {
+            var strategy = new ApiCurrencyConversionStrategy();
+            var context = new CurrencyConversionContext(strategy);
+
+            var result = context.Convert(0, 18);
+
+            Assert.Equal(0, result);
+        }
     }
 }
 
